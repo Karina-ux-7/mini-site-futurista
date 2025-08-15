@@ -16,4 +16,12 @@ Este é meu primeiro projeto futurista, criado como prática de desenvolvimento 
 **Como rodar o projeto:**  
 1. Clone o repositório:  
 ```bash
-git clone https://github.com/seunome/mini-site-futurista.git
+git clone https://github.com/Karina-ux-7/mini-site-futurista.git
+Abra o arquivo index.html no navegador.
+
+Preview:
+(print)
+
+Contato:
+LinkedIn: https://www.linkedin.com/in/karina-b-804578280/
+
