@@ -5,41 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mini Site Futurista</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+      background-color: #0d0d0d;
+      color: #fff;
       height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       flex-direction: column;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      color: #fff;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      overflow: hidden;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
     }
 
     h1 {
+      position: relative;
+      z-index: 1;
       font-size: 3rem;
-      text-transform: uppercase;
-      letter-spacing: 4px;
       color: #00fff7;
       text-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7;
       animation: glow 2s infinite alternate;
     }
 
     p {
-      font-size: 1.2rem;
-      max-width: 600px;
+      position: relative;
+      z-index: 1;
       color: #ddd;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7; }
-      to { text-shadow: 0 0 20px #00fff7, 0 0 40px #00fff7; }
+      max-width: 600px;
     }
 
     .btn {
+      position: relative;
+      z-index: 1;
       margin-top: 20px;
       padding: 12px 24px;
       border: none;
@@ -51,16 +56,63 @@
       font-weight: bold;
       transition: 0.3s;
     }
+    .btn:hover { background: #00cfc0; transform: scale(1.05); }
 
-    .btn:hover {
-      background: #00cfc0;
-      transform: scale(1.05);
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7; }
+      to { text-shadow: 0 0 20px #00fff7, 0 0 40px #00fff7; }
     }
   </style>
 </head>
 <body>
+  <canvas id="bg"></canvas>
   <h1>Bem-vinda ao Futuro 🚀</h1>
-  <p>Este é meu primeiro projeto publicado no GitHub Pages. <br> Um espaço para mostrar minhas habilidades e evoluir como desenvolvedora.</p>
+  <p>Este é meu primeiro projeto publicado no GitHub Pages. Um espaço para mostrar minhas habilidades e evoluir como desenvolvedora.</p>
   <button class="btn">Explorar ✨</button>
+
+  <script>
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 100;
+
+    function random(min, max) { return Math.random() * (max - min) + min; }
+
+    for(let i = 0; i < particleCount; i++){
+      particles.push({
+        x: random(0, width),
+        y: random(0, height),
+        r: random(1, 3),
+        dx: random(-1,1),
+        dy: random(-1,1)
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0,0,width,height);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = '#00fff7';
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if(p.x < 0 || p.x > width) p.dx *= -1;
+        if(p.y < 0 || p.y > height) p.dy *= -1;
+      });
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    animate();
+  </script>
 </body>
 </html>
